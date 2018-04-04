@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Bola : MonoBehaviour {
 
-    public bool color;
+    public bool foco;
 	// Use this for initialization
 	void Start () {
-        color = false;
+        foco = false;
 	}
 	
 	// Update is called once per frame
@@ -16,6 +16,7 @@ public class Bola : MonoBehaviour {
 	}
     public void Guarda()
     {
-        color = true;
+        foco = true;
+        //GetComponent<Renderer>().material.color = Color.green;
     }
 }

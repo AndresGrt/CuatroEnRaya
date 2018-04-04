@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Grid2D : MonoBehaviour {
 
-	public int width;
-	public int height;
-	public GameObject puzzlePiece;
-	private GameObject[,] grid;
-    public Bola[] allGameObjects;
+    public int width;
+    public int height;
+    public GameObject puzzlePiece;
+    private GameObject[,] grid;
+    public Bola[,] bola;
+
     public bool cambio;
     public bool suiche1;
     public bool suiche2;
@@ -32,25 +33,15 @@ public class Grid2D : MonoBehaviour {
 			}
 		}
 
-
-        //crea un ArrayList
-        ArrayList aList = new ArrayList();
-        //crea un array con todos los objetos de la escena que tengan la clase bola
-        Bola[] allObjects = Bola.FindObjectsOfType<Bola>();
-        //itera a traves de todos los objetos
-        foreach (Bola o in allObjects)
+        bola = new Bola[width,height];
+        for(int a = 0; a < width; a++)
         {
-            //si hay un GameObject con la clase bola se añade a la lista
-            Bola go = o as Bola;
-            if (go != null)
+            for (int b = 0; b < height; b++)
             {
-                aList.Add(go);
+                bola[a, b] = grid[a, b].GetComponent<Bola>();
             }
         }
-        //inicializamos la matriz allGameObjects
-        allGameObjects = new Bola[aList.Count];
-        //copiamos lista a la matriz
-        aList.CopyTo(allGameObjects);
+
 
     }
 	void Update()
@@ -59,86 +50,116 @@ public class Grid2D : MonoBehaviour {
             Vector3 mPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             CambioTrue(mPosition);
 	}
+    //para evaluar si es player1 en juego o player2 en juego
     void CambioTrue (Vector3 position)
     {
         int x = (int)(position.x + .4f);
         int y = (int)(position.y + .4f);
-        if (suiche1 == false)
+        if (suiche1)
         {
-            for (int _x = 0; _x < width; _x++)
-            {
-                for (int _y = 0; _y < height; _y++)
-                {
-                    GameObject go = grid[_x, _y];
-                    //go.GetComponent<Renderer>().material.SetColor("_Color", Color.white);
-                    //if (go.GetComponent<Renderer>().material.color == Color.red && bola.color == false)
-                    //{
-                        go.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
-                    //}
-                    //else if (go.GetComponent<Renderer>().material.color == Color.blue)
-                    //{
-                    //    go.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
-                    //}
-
-                }
-            }
-
-            if (x >= 0 && y >= 0 && x < width && y < height)
-            {
-                GameObject go = grid[x, y];
-                //if (cambio == false)
-                //{
-                if (go.GetComponent<Renderer>().material.color == Color.black)
-                {
-                    go.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-                }
-                //}
-            }
+            Player2(x,y);
         }
-        if (suiche2 == false)
+        if (!suiche1)
         {
-            for (int _x = 0; _x < width; _x++)
-            {
-                for (int _y = 0; _y < height; _y++)
-                {
-                    GameObject go = grid[_x, _y];
-                    //if (go.GetComponent<Renderer>().material.color == Color.blue && bola.color == false)
-                    //{
-                        go.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
-                    //}
-                    //else if (go.GetComponent<Renderer>().material.color == Color.red)
-                    //{
-                    //    go.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
-                    //}
-                }
-            }
-
-            if (x >= 0 && y >= 0 && x < width && y < height)
-            {
-                GameObject go = grid[x, y];
-                //if (cambio == true)
-                //{
-                if (go.GetComponent<Renderer>().material.color == Color.black)
-                {
-                    go.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
-                }
-                //}
-            }
+            Player1(x,y);
         }
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (suiche1 == false)
+            if (suiche1 == true)
             {
-                suiche1 = true;
-                suiche2 = false;
-                //bola.Guarda();
-            }
-            else if (suiche2 == false)
-            {
-                suiche2 = true;
+                //player1
                 suiche1 = false;
+            }
+            else 
+            {
+                //Player 2
+                suiche1 = true;
+            }
+        }
+
+        Verifica();
+    }
+    //cuando player1 esta en juego
+    public void Player1(int x, int y)
+    {
+        for (int _x = 0; _x < width; _x++)
+        {
+            for (int _y = 0; _y < height; _y++)
+            {
+
+                GameObject go = grid[_x, _y];
+                if (go.GetComponent<Renderer>().material.color == Color.red && bola[_x, _y].foco == false)
+                    go.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
+
+            }
+        }
+
+        if (x >= 0 && y >= 0 && x < width && y < height)
+        {
+            GameObject go = grid[x, y];
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                bola[x, y].Guarda();
+            }
+
+            if (go.GetComponent<Renderer>().material.color == Color.black)
+            {
+                go.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+            }
+        }
+
+        
+    }
+    //cuando player2 esta en juego
+    public void Player2(int x, int y)
+    {
+        for (int _x = 0; _x < width; _x++)
+        {
+            for (int _y = 0; _y < height; _y++)
+            {
+                GameObject go = grid[_x, _y];
+
+                if (go.GetComponent<Renderer>().material.color == Color.blue && bola[_x, _y].foco == false)
+                {
+                    go.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
+                }
+
+            }
+        }
+
+        if (x >= 0 && y >= 0 && x < width && y < height)
+        {
+            GameObject go = grid[x, y];
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                bola[x, y].Guarda();
+            }
+            if (go.GetComponent<Renderer>().material.color == Color.black)
+            {
+                go.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
             }
         }
     }
+
+    public void Verifica()
+    {
+        for (int _x = 0; _x < width; _x++)
+        {
+            for (int _y = 0; _y < height; _y++)
+            {
+                if (_x < width-1)//aun no entiendo por que me sale fuera de rango
+                {
+                    if (grid[_x, _y].GetComponent<Renderer>().material.color == grid[_x + 1, _y].GetComponent<Renderer>().material.color 
+                        && grid[_x, _y].GetComponent<Renderer>().material.color != Color.black && bola[_x, _y].foco == true)
+                    {
+                        grid[_x, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la primer esfera
+                        grid[_x + 1, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la esfera que le sige a la primera
+                    }
+                }
+        }
+    }
+
 }

@@ -101,7 +101,7 @@ public class Doc_24 : MonoBehaviour {
         {
             for (int j = 0; j< rangoB; j++)//columnas
             {
-                if (i < rangoA-1)//aun no entiendo por que me sale fuera de rango
+                if (i < rangoA-1)
                 {
                     if (matrisR[i,j].GetComponent<Renderer>().material.color == matrisR[i+1,j].GetComponent<Renderer>().material.color)//evalua si cumple la condicion de se la siguiente es igual
                     {
