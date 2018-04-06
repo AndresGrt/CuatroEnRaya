@@ -10,6 +10,8 @@ public class Grid2D : MonoBehaviour {
     private GameObject[,] grid;
     public Bola[,] bola;
     public int contaGana;
+    public int contaGana2;
+
 
     public bool cambio;
     public bool suiche1;
@@ -108,6 +110,7 @@ public class Grid2D : MonoBehaviour {
             if (go.GetComponent<Renderer>().material.color == Color.black)
             {
                 go.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                
                 Verifica(x,y);
             }
         }
@@ -146,26 +149,62 @@ public class Grid2D : MonoBehaviour {
             }
         }
     }
-
+    public int suma;
+    public int suma2;
     void Verifica(int x, int y)
     {
-        if (x >= 0 && y >= 0 && x < width && y < height)
+        
+        if (x >= 0 && y >= 0 && x < width && y < height )
         {
             GameObject go = grid[x, y];
             Color colorP1 = go.GetComponent<Renderer>().material.color;
             Color colorP2 = go.GetComponent<Renderer>().material.color;
 
-            if (colorP2 == Color.blue)
+            if (colorP1 == Color.red)
             {
+
                 for (int _x = 0; _x < width; _x++)
                 {
-                    Color orientaH = grid[_x, y].GetComponent<Renderer>().material.color;
-
-                    if (colorP2 == orientaH)
-                        contaGana++;
+                    
+                    Color orientaH = grid[x, y].GetComponent<Renderer>().material.color;
+                    contaGana = 0;
+                    if (colorP2 == orientaH && bola[x, y].foco == true)
+                    {
+                        contaGana = contaGana + 1;
+                        suma += contaGana;
+                    }
+                        
                     else
                         contaGana = 0;
-                    
+
+                    if (suma == 40)
+                    {
+                        print("gana");
+                    }
+                }
+            }
+
+            if (colorP2 == Color.blue)
+            {
+
+                for (int _x = 0; _x < width; _x++)
+                {
+
+                    Color orientaH = grid[x, y].GetComponent<Renderer>().material.color;
+                    contaGana2 = 0;
+                    if (colorP2 == orientaH && bola[x, y].foco == true)
+                    {
+                        contaGana2 = contaGana2 + 1;
+                        suma2 += contaGana2;
+                    }
+
+                    else
+                        contaGana2 = 0;
+
+                    if (suma2 == 40)
+                    {
+                        print("gana");
+                    }
                 }
             }
 
