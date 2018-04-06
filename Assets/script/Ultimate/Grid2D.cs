@@ -9,6 +9,7 @@ public class Grid2D : MonoBehaviour {
     public GameObject puzzlePiece;
     private GameObject[,] grid;
     public Bola[,] bola;
+    public int contaGana;
 
     public bool cambio;
     public bool suiche1;
@@ -78,7 +79,7 @@ public class Grid2D : MonoBehaviour {
             }
         }
 
-        Verifica();
+        //Verifica();
     }
     //cuando player1 esta en juego
     public void Player1(int x, int y)
@@ -91,7 +92,7 @@ public class Grid2D : MonoBehaviour {
                 GameObject go = grid[_x, _y];
                 if (go.GetComponent<Renderer>().material.color == Color.red && bola[_x, _y].foco == false)
                     go.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
-
+               
             }
         }
 
@@ -107,6 +108,7 @@ public class Grid2D : MonoBehaviour {
             if (go.GetComponent<Renderer>().material.color == Color.black)
             {
                 go.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                Verifica(x,y);
             }
         }
 
@@ -140,26 +142,49 @@ public class Grid2D : MonoBehaviour {
             if (go.GetComponent<Renderer>().material.color == Color.black)
             {
                 go.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
+                Verifica(x,y);
             }
         }
     }
 
-    public void Verifica()
+    void Verifica(int x, int y)
     {
-        for (int _x = 0; _x < width; _x++)
+        if (x >= 0 && y >= 0 && x < width && y < height)
         {
-            for (int _y = 0; _y < height; _y++)
-            {
-                if (_x < width-1)//aun no entiendo por que me sale fuera de rango
-                {
-                    if (grid[_x, _y].GetComponent<Renderer>().material.color == grid[_x + 1, _y].GetComponent<Renderer>().material.color 
-                        && grid[_x, _y].GetComponent<Renderer>().material.color != Color.black && bola[_x, _y].foco == true)
-                    {
-                        grid[_x, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la primer esfera
-                        grid[_x + 1, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la esfera que le sige a la primera
-                    }
-                }
-        }
-    }
+            GameObject go = grid[x, y];
+            Color colorP1 = go.GetComponent<Renderer>().material.color;
+            Color colorP2 = go.GetComponent<Renderer>().material.color;
 
+            if (colorP2 == Color.blue)
+            {
+                for (int _x = 0; _x < width; _x++)
+                {
+                    Color orientaH = grid[_x, y].GetComponent<Renderer>().material.color;
+
+                    if (colorP2 == orientaH)
+                        contaGana++;
+                    else
+                        contaGana = 0;
+                    
+                }
+            }
+
+        }
+
+        //    for (int _x = 0; _x < width; _x++)
+        //    {
+        //        for (int _y = 0; _y < height; _y++)
+        //        {
+        //            if (_x < width - 1)//aun no entiendo por que me sale fuera de rango
+        //            {
+        //                if (grid[_x, _y].GetComponent<Renderer>().material.color == grid[_x + 1, _y].GetComponent<Renderer>().material.color
+        //                    && grid[_x, _y].GetComponent<Renderer>().material.color != Color.black && bola[_x, _y].foco == true)
+        //                {
+        //                    grid[_x, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la primer esfera
+        //                    grid[_x + 1, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la esfera que le sige a la primera
+        //                }
+        //            }
+        //        }
+        //    }
+    }
 }
