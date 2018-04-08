@@ -10,17 +10,12 @@ public class Grid2D : MonoBehaviour {
     private GameObject[,] grid;
     public Bola[,] bola;
     public int contaGana;
-    public int contaGana2;
-
-
-    public bool cambio;
-    public bool suiche1;
-    public bool suiche2;
+    
+    public bool suiche;
 
 
     void Start () {
-        suiche1 = false;
-        suiche2 = true;
+        suiche = false;
 
 		grid = new GameObject[width,height];
 		for(int x = 0; x < width; x++)
@@ -58,26 +53,26 @@ public class Grid2D : MonoBehaviour {
     {
         int x = (int)(position.x + .4f);
         int y = (int)(position.y + .4f);
-        if (suiche1)
+        if (suiche)
         {
             Player2(x,y);
         }
-        if (!suiche1)
+        if (!suiche)
         {
             Player1(x,y);
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (suiche1 == true)
+            if (suiche == true)
             {
                 //player1
-                suiche1 = false;
+                suiche = false;
             }
             else 
             {
                 //Player 2
-                suiche1 = true;
+                suiche = true;
             }
         }
 
@@ -149,81 +144,37 @@ public class Grid2D : MonoBehaviour {
             }
         }
     }
-    public int suma;
-    public int suma2;
+    public bool inicia = false;
     void Verifica(int x, int y)
     {
-        
-        if (x >= 0 && y >= 0 && x < width && y < height )
+        for (int _x = 0; _x < width; _x++)
         {
-            GameObject go = grid[x, y];
-            Color colorP1 = go.GetComponent<Renderer>().material.color;
-            Color colorP2 = go.GetComponent<Renderer>().material.color;
-
-            if (colorP1 == Color.red)
+            for (int _y = 0; _y < height; _y++)
             {
-
-                for (int _x = 0; _x < width; _x++)
+                for (int c = _x+1; c < width; c++)
                 {
-                    
-                    Color orientaH = grid[x, y].GetComponent<Renderer>().material.color;
-                    contaGana = 0;
-                    if (colorP2 == orientaH && bola[x, y].foco == true)
+                    if (grid[_x, _y].GetComponent<Renderer>().material.color == grid[c, _y].GetComponent<Renderer>().material.color && bola[x, y].foco == true)
                     {
-                        contaGana = contaGana + 1;
-                        suma += contaGana;
-                    }
-                        
-                    else
-                        contaGana = 0;
-
-                    if (suma == 40)
-                    {
-                        print("gana");
+                        if (Input.GetButtonDown("Fire1"))
+                        {
+                            inicia = true;
+                        }
                     }
                 }
             }
-
-            if (colorP2 == Color.blue)
-            {
-
-                for (int _x = 0; _x < width; _x++)
-                {
-
-                    Color orientaH = grid[x, y].GetComponent<Renderer>().material.color;
-                    contaGana2 = 0;
-                    if (colorP2 == orientaH && bola[x, y].foco == true)
-                    {
-                        contaGana2 = contaGana2 + 1;
-                        suma2 += contaGana2;
-                    }
-
-                    else
-                        contaGana2 = 0;
-
-                    if (suma2 == 40)
-                    {
-                        print("gana");
-                    }
-                }
-            }
-
         }
+        if (inicia)
+        {
+            contaGana++;
+            print("entra");
+            inicia = false;
+        }
+        else
+            contaGana = 0;
 
-        //    for (int _x = 0; _x < width; _x++)
-        //    {
-        //        for (int _y = 0; _y < height; _y++)
-        //        {
-        //            if (_x < width - 1)//aun no entiendo por que me sale fuera de rango
-        //            {
-        //                if (grid[_x, _y].GetComponent<Renderer>().material.color == grid[_x + 1, _y].GetComponent<Renderer>().material.color
-        //                    && grid[_x, _y].GetComponent<Renderer>().material.color != Color.black && bola[_x, _y].foco == true)
-        //                {
-        //                    grid[_x, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la primer esfera
-        //                    grid[_x + 1, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la esfera que le sige a la primera
-        //                }
-        //            }
-        //        }
-        //    }
+        if (contaGana == 4)
+        {
+            print("gana");
+        }
     }
 }

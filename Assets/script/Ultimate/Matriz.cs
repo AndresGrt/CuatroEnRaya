@@ -70,4 +70,52 @@ public class Matriz : MonoBehaviour {
             }
         }
     }
+    void Verifica(int x , int y )
+    {
+        //if (x >= 0 && y >= 0 && x < width && y < height )
+        //{
+        //    GameObject go = grid[x, y];
+        //    Color colorP1 = go.GetComponent<Renderer>().material.color;
+        //    Color colorP2 = go.GetComponent<Renderer>().material.color;
+
+        //    if (colorP1 == Color.red)
+        //    {
+
+        //        for (int _x = 0; _x < width; _x++)
+        //        {
+
+        //            Color orientaH = grid[_x, y].GetComponent<Renderer>().material.color;
+
+        //            if (colorP1 == orientaH && bola[x, y].foco == true)
+        //            {
+        //                contaGana ++;
+        //            }
+
+        //            else
+        //                contaGana = 0;
+
+        //            if (contaGana == 4)
+        //            {
+        //                print("gana");
+        //            }
+        //        }
+        //    }
+        //}
+
+        //for (int _x = 0; _x < width; _x++)
+        //{
+        //    for (int _y = 0; _y < height; _y++)
+        //    {
+        //        if (_x < width - 1)//aun no entiendo por que me sale fuera de rango
+        //        {
+        //            if (grid[_x, _y].GetComponent<Renderer>().material.color == grid[_x + 1, _y].GetComponent<Renderer>().material.color
+        //                && grid[_x, _y].GetComponent<Renderer>().material.color != Color.black && bola[_x, _y].foco == true)
+        //            {
+        //                grid[_x, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la primer esfera
+        //                grid[_x + 1, _y].GetComponent<Renderer>().material.color = Color.green;//hago negra la esfera que le sige a la primera
+        //            }
+        //        }
+        //    }
+        //}
+    }
 }
