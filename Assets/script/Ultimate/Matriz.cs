@@ -106,7 +106,7 @@ public class Matriz : MonoBehaviour {
         //{
         //    for (int _y = 0; _y < height; _y++)
         //    {
-        //        if (_x < width - 1)//aun no entiendo por que me sale fuera de rango
+        //        if (_x < width - 1)//
         //        {
         //            if (grid[_x, _y].GetComponent<Renderer>().material.color == grid[_x + 1, _y].GetComponent<Renderer>().material.color
         //                && grid[_x, _y].GetComponent<Renderer>().material.color != Color.black && bola[_x, _y].foco == true)
@@ -116,6 +116,36 @@ public class Matriz : MonoBehaviour {
         //            }
         //        }
         //    }
+        //}
+
+        //for (int _x = 0; _x < width; _x++)
+        //{
+        //    for (int _y = 0; _y < height; _y++)
+        //    {
+        //        for (int c = _x + 1; c < width; c++)
+        //        {
+        //            if (grid[_x, _y].GetComponent<Renderer>().material.color == grid[c, _y].GetComponent<Renderer>().material.color && bola[x, y].foco == true)
+        //            {
+        //                if (Input.GetButtonDown("Fire1"))
+        //                {
+        //                    inicia = true;
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        //if (inicia)
+        //{
+        //    contaGana++;
+        //    print("entra");
+        //    inicia = false;
+        //}
+        //else
+        //    contaGana = 0;
+
+        //if (contaGana == 4)
+        //{
+        //    print("gana");
         //}
     }
 }

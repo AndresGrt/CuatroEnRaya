@@ -53,28 +53,29 @@ public class Grid2D : MonoBehaviour {
     {
         int x = (int)(position.x + .4f);
         int y = (int)(position.y + .4f);
-        if (suiche)
-        {
-            Player2(x,y);
-        }
-        if (!suiche)
-        {
-            Player1(x,y);
-        }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            if (suiche == true)
+            if (suiche)
             {
-                //player1
-                suiche = false;
+                Player2(x,y);
             }
-            else 
+            if (!suiche)
             {
-                //Player 2
-                suiche = true;
+                Player1(x,y);
             }
-        }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                if (suiche == true)
+                {
+                    //player1
+                    suiche = false;
+                }
+                else 
+                {
+                    //Player 2
+                    suiche = true;
+                }
+            }
 
         //Verifica();
     }
@@ -144,37 +145,69 @@ public class Grid2D : MonoBehaviour {
             }
         }
     }
+
+
     public bool inicia = false;
+
     void Verifica(int x, int y)
     {
-        for (int _x = 0; _x < width; _x++)
+        if (x >= 0 && y >= 0 && x < width && y < height)
         {
-            for (int _y = 0; _y < height; _y++)
+            GameObject go = grid[x, y];
+            for (int c = x; c > 0; c--)
             {
-                for (int c = _x+1; c < width; c++)
+                if (grid[x, y].GetComponent<Renderer>().material.color == grid[c, y].GetComponent<Renderer>().material.color && bola[x, y].foco == true)
                 {
-                    if (grid[_x, _y].GetComponent<Renderer>().material.color == grid[c, _y].GetComponent<Renderer>().material.color && bola[x, y].foco == true)
-                    {
-                        if (Input.GetButtonDown("Fire1"))
-                        {
-                            inicia = true;
-                        }
-                    }
+                    contaGana++;
+                }
+                else
+                    contaGana = 0;
+                if (contaGana == 4)
+                {
+                    print("gana");
                 }
             }
-        }
-        if (inicia)
-        {
-            contaGana++;
-            print("entra");
-            inicia = false;
-        }
-        else
-            contaGana = 0;
+            for (int c = x; c < width; c++)
+            {
+                if (grid[x, y].GetComponent<Renderer>().material.color == grid[c, y].GetComponent<Renderer>().material.color && bola[x, y].foco == true)
+                {
+                    contaGana++;
+                }
+                else
+                    contaGana = 0;
+                if (contaGana == 4)
+                {
+                    print("gana");
+                }
+            }
+            for (int h = y; h > 0; h--)
+            {
+                if (grid[x, y].GetComponent<Renderer>().material.color == grid[x, h].GetComponent<Renderer>().material.color && bola[x, y].foco == true)
+                {
+                    contaGana++;
+                }
+                else
+                    contaGana = 0;
+                if (contaGana == 4)
+                {
+                    print("gana");
+                }
+            }
+            for (int h = y; h < height; h++)
+            {
+                if (grid[x, y].GetComponent<Renderer>().material.color == grid[x, h].GetComponent<Renderer>().material.color && bola[x, y].foco == true)
+                {
+                    contaGana++;
+                }
+                else
+                    contaGana = 0;
+                if (contaGana == 4)
+                {
+                    print("gana");
+                }
+            }
 
-        if (contaGana == 4)
-        {
-            print("gana");
         }
+
     }
 }
