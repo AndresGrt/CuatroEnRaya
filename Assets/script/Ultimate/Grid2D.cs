@@ -6,41 +6,41 @@ using UnityEngine.UI;
 public class Grid2D : MonoBehaviour
 {
 
-    public int width;
-    public int height;
-    public GameObject puzzlePiece;
-    private GameObject[,] grid;
-    public Bola[,] bola;
-    public int contaGana;
-    public Text iniciar;
+    public int width;//ancho de la matriz
+    public int height;//alto de la matriz
+    public GameObject puzzlePiece;//esfera que va ainstanciar
+    private GameObject[,] grid;//array bidimencional para guardar las esferas
+    public Bola[,] bola;//array para guardar la clase bola de las esferas
+    public int contaGana;//contador entero para saver si gana o no al llegar a cierta cantidad
+    public Text iniciar;//texto del canvas que se usa para iniciar la partida
 
-    public bool suiche;
-    public bool reinicio;
+    public bool suiche;//boleano que verifica si es player 1 o player 2
+    public bool reinicio;//boleano para usarse cuando alguien gana todo se pause para empezar la nueva partida
 
     void Start()
     {
-        suiche = false;
+        suiche = false;//inicializa suiche en falso
 
-        grid = new GameObject[width, height];
-        for (int x = 0; x < width; x++)
+        grid = new GameObject[width, height];//grid es igual a la matris de objetos con el ancho y el alto
+        for (int x = 0; x < width; x++)//for para el ancho
         {
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < height; y++)//for para el alto
             {
-                GameObject go = GameObject.Instantiate(puzzlePiece) as GameObject;
-                Vector3 position = new Vector3(x, y, 0);
-                go.transform.position = position;
-                go.AddComponent(typeof(Bola));
-                go.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
-                grid[x, y] = go;
+                GameObject go = GameObject.Instantiate(puzzlePiece) as GameObject;//instancie las esferas
+                Vector3 position = new Vector3(x, y, 0);//las posiciones en que se van a istanciar
+                go.transform.position = position;//le da las posiciones a las esferas
+                go.AddComponent(typeof(Bola));//les agrega la clase bola
+                go.GetComponent<Renderer>().material.SetColor("_Color", Color.black);//pinta todas las esferas en negro
+                grid[x, y] = go;//se guarda go en la matriz
             }
         }
 
-        bola = new Bola[width, height];
-        for (int a = 0; a < width; a++)
+        bola = new Bola[width, height];//bola es igual a la matriz de clases en ancho y alto
+        for (int a = 0; a < width; a++)//for para el ancho
         {
-            for (int b = 0; b < height; b++)
+            for (int b = 0; b < height; b++)//for para el alto
             {
-                bola[a, b] = grid[a, b].GetComponent<Bola>();
+                bola[a, b] = grid[a, b].GetComponent<Bola>();//se guardan las clases en las mismas posiciones de las esferas
             }
         }
 
@@ -49,11 +49,11 @@ public class Grid2D : MonoBehaviour
     void Update()
     {
 
-        if (!reinicio)
+        if (!reinicio)//si reinicio es falso
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < width; x++)//for que recorre el ancho de la matriz
             {
-                for (int y = 0; y < height; y++)
+                for (int y = 0; y < height; y++)//for que recorre el alto de la matriz
                 {
                     GameObject go = grid[x, y];
                     go.GetComponent<Renderer>().material.SetColor("_Color", Color.black);
