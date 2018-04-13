@@ -14,9 +14,9 @@ public class Bola : MonoBehaviour {
 	void Update () {
 		
 	}
+    //funcion guarda con un buleano foco que se hace verdadero cuando la clase grid lo llama
     public void Guarda()
     {
         foco = true;
-        //GetComponent<Renderer>().material.color = Color.green;
     }
 }
